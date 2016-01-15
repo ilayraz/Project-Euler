@@ -5,7 +5,7 @@
 """
 
 
-def mine(mx):
+def main(mx):
     p = q = 1
     sm = 0
 
