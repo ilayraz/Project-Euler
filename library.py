@@ -1,0 +1,61 @@
+""" library of generic functions to import """
+
+
+def gcd(a, b):
+    """ Euclidean algorithm """
+    while b:
+        a, b = b, a % b
+    return a
+
+def primeGenerator():
+    """ infinite prime generator. http://stackoverflow.com/a/19391111 """
+    import itertools
+    yield from (2, 3, 5, 7)
+    D = {}
+    ps = primeGenerator()
+    next(ps)
+    p = next(ps)
+    assert p == 3
+    psq = p*p
+    for i in itertools.count(9, 2):
+        if i in D:      # composite
+            step = D.pop(i)
+        elif i < psq:   # prime
+            yield i
+            continue
+        else:           # composite, = p*p
+            assert i == psq
+            step = 2*p
+            p = next(ps)
+            psq = p*p
+        i += step
+        while i in D:
+            i += step
+        D[i] = step
+
+def isPrime(num):
+    """ checks if num is a prime """
+    for i in primeGenerator():
+        if num == i:
+            return True
+        elif i > num:
+            return False
+
+def ithPrime(num):
+    """ gets the nth prime """
+    for i, p in enumerate(primeGenerator()):
+        if i == num:
+            return p
+
+
+def factor(num):
+    """factorizes num"""
+    factors = []
+    for i in primeGenerator():
+        if i > num:
+            break
+        while num % i == 0:
+            factors.append(i)
+            num //= i
+
+    return factors
