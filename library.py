@@ -7,6 +7,7 @@ def gcd(a, b):
         a, b = b, a % b
     return a
 
+
 def primeGen():
     """ infinite prime generator. http://stackoverflow.com/a/19391111 """
     import itertools
@@ -33,17 +34,19 @@ def primeGen():
             i += step
         D[i] = step
 
+
 def isPrime(num):
     """ checks if num is a prime """
-    for i in primeGenerator():
+    for i in primeGen():
         if num == i:
             return True
         elif i > num:
             return False
 
+
 def ithPrime(num):
     """ gets the nth prime """
-    for i, p in enumerate(primeGenerator()):
+    for i, p in enumerate(primeGen()):
         if i == num:
             return p
 
@@ -51,7 +54,7 @@ def ithPrime(num):
 def factor(num):
     """factorizes num"""
     factors = []
-    for i in primeGenerator():
+    for i in primeGen():
         if i > num:
             break
         while num % i == 0:
@@ -59,6 +62,7 @@ def factor(num):
             num //= i
 
     return factors
+
 
 def pyGen():
     """ generates Pythagorean triplets. Uses Euclid's formula """
