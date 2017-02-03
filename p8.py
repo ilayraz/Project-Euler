@@ -5,4 +5,4 @@ mults = [list(map(int, number))]
 for length in range(12):
     mults.append(list(map(lambda x: x[0] * x[1], zip(mults[0], mults[length][1:]))))
 
-print(max(mults[len(mults)-1]))
+print(max(mults[-1]))
