@@ -1,8 +1,10 @@
 """ library of generic functions to import """
 
+import math
+
 
 def gcd(a, b):
-    """ Euclidean algorithm """
+    """ Euclidean algorithm. Can also use math.gcd """
     while b:
         a, b = b, a % b
     return a
@@ -17,18 +19,18 @@ def primeGen():
     next(ps)
     p = next(ps)
     assert p == 3
-    psq = p*p
+    psq = p * p
     for i in itertools.count(9, 2):
-        if i in D:      # composite
+        if i in D:  # composite
             step = D.pop(i)
-        elif i < psq:   # prime
+        elif i < psq:  # prime
             yield i
             continue
-        else:           # composite, = p*p
+        else:  # composite, = p*p
             assert i == psq
-            step = 2*p
+            step = 2 * p
             p = next(ps)
-            psq = p*p
+            psq = p * p
         i += step
         while i in D:
             i += step
@@ -52,16 +54,25 @@ def ithPrime(num):
 
 
 def factor(num):
-    """factorizes num"""
-    factors = []
+    for i in range(1, int(math.sqrt(num)) + 1):
+        if (num % i == 0):
+            div = num // i
+            yield i
+            if i != div:
+                yield div
+
+
+def primeFactor(num):
+    """ prim factorizes num """
     for i in primeGen():
         if i > num:
             break
+        count = 0
         while num % i == 0:
-            factors.append(i)
+            count += 1
             num //= i
-
-    return factors
+        if count:
+            yield i, count
 
 
 def pyGen():
@@ -69,4 +80,4 @@ def pyGen():
     import itertools
     for m in itertools.count(2):
         for n in range(1, m):
-            yield (m**2 - n**2, 2*m*n, m**2 + n**2)
+            yield (m**2 - n**2, 2 * m * n, m**2 + n**2)
